@@ -3,6 +3,8 @@
 const express = require("express");
 const path = require('path');
 const hbs = require('hbs');
+const request = require('request');
+const bodyParser = ('body-parser')
 
 const app = express();
 
@@ -10,21 +12,63 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+//sets middleware for body parser
+ app.use(express.urlencoded());
+
+
+ function call_article(finishedAPI, ticker='aapl'){
+  const options = {
+    method: 'GET',
+    url: 'https://climate-news-feed.p.rapidapi.com/page/1',
+    qs: {limit: '10'},
+    headers: {
+      'X-RapidAPI-Key': '13d1b5e584mshf26bb79cd8c3801p1aba3fjsn419eecd14937',
+      'X-RapidAPI-Host': 'climate-news-feed.p.rapidapi.com',
+      useQueryString: true
+    },
+    json:true
+  }
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    if(response.statusCode === 200){finishedAPI(body)}
+  });
+  // request('https://climate-news-feed.p.rapidapi.com/?rapidapi-key=13d1b5e584mshf26bb79cd8c3801p1aba3fjsn419eecd14937', {json:true},(err,res,body)=>{
+  //     if(err){return console.log(err);}
+  //     if(res.statusCode === 200){finishedAPI(body)}
+  // });
+}
 
 
 // Define a route handler for the root URL
 // This renders the "main.hbs" view using the Handlebars templating engine
-app.get('/', (req, res) => {
-  res.render('main');
+app.get('/', function(req, res) {
+  call_article(function(doneAPI) {
+    res.render('home', {
+      news: doneAPI
+    });
+  })
 });
 
 // this takes you to the home page
 app.get('/home', (req, res) => {
-  res.render('home');
+  call_article(function(doneAPI){
+    res.render('home', {
+        news: doneAPI
+    })
+  })
 });
 
+app.post('/home', (req, res) => {
+  call_article(function(doneAPI){
+    res.render('home', {
+        news: doneAPI
+    })
+  })
+});
+
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 app.listen(8000, () => {
   console.log('Server listening on port 8000');
 });
