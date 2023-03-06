@@ -1,3 +1,5 @@
+//needed npm express, path, hbs 
+
 const express = require("express");
 const path = require('path');
 const hbs = require('hbs');
@@ -9,7 +11,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 
 // Define a route handler for the root URL
@@ -21,9 +23,9 @@ app.get('/', (req, res) => {
 // this takes you to the home page
 app.get('/home', (req, res) => {
   res.render('home');
-});
+}); 
 
-app.listen(8000, () => {
+app.listen(8000, () => { 
   console.log('Server listening on port 8000');
 });
 
