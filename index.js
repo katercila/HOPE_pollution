@@ -13,7 +13,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 //sets middleware for body parser
- app.use(express.urlencoded());
+ app.use(express.urlencoded({extended:false}));
 
 
  function call_article(finishedAPI, ticker='aapl'){
@@ -166,7 +166,7 @@ const handleGetElevationClick = async () => {
   }
 };
 
-const getElevationBtn = document.getElementById('get-elevation-btn');
-getElevationBtn.addEventListener('click', handleGetElevationClick);
+// const getElevationBtn = document.getElementById('get-elevation-btn');
+// getElevationBtn.addEventListener('click', handleGetElevationClick);
 
 
