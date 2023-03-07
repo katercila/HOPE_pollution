@@ -1,564 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-      crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"/>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="style.css" >
-    <title>Ocean</title>
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
-      <div class="container">
-        <a href="#" class="navbar-brand"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-tsunami" viewBox="0 0 16 16">
-            <path d="M.036 12.314a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65zm0 2a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65zM2.662 8.08c-.456 1.063-.994 2.098-1.842 2.804a.5.5 0 0 1-.64-.768c.652-.544 1.114-1.384 1.564-2.43.14-.328.281-.68.427-1.044.302-.754.624-1.559 1.01-2.308C3.763 3.2 4.528 2.105 5.7 1.299 6.877.49 8.418 0 10.5 0c1.463 0 2.511.4 3.179 1.058.67.66.893 1.518.819 2.302-.074.771-.441 1.516-1.02 1.965a1.878 1.878 0 0 1-1.904.27c-.65.642-.907 1.679-.71 2.614C11.076 9.215 11.784 10 13 10h2.5a.5.5 0 0 1 0 1H13c-1.784 0-2.826-1.215-3.114-2.585-.232-1.1.005-2.373.758-3.284L10.5 5.06l-.777.388a.5.5 0 0 1-.447 0l-1-.5a.5.5 0 0 1 .447-.894l.777.388.776-.388a.5.5 0 0 1 .447 0l1 .5a.493.493 0 0 1 .034.018c.44.264.81.195 1.108-.036.328-.255.586-.729.637-1.27.05-.529-.1-1.076-.525-1.495-.426-.42-1.19-.77-2.477-.77-1.918 0-3.252.448-4.232 1.123C5.283 2.8 4.61 3.738 4.07 4.79c-.365.71-.655 1.433-.945 2.16-.15.376-.301.753-.463 1.13z"/>
-          </svg></a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+  <title>Ocean</title>
+</head>
 
-        <div class="collapse navbar-collapse" id="navmenu">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a href="#learn" class="nav-link">Impact</a>
-            </li>
-            <li class="nav-item">
-              <a href="#global" class="nav-link">Global Warming</a>
-            </li>
-            <li class="nav-item">
-              <a href="#questions" class="nav-link">Get Involved</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+    <div class="container">
+      <a href="#" class="navbar-brand"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35"
+          fill="currentColor" class="bi bi-tsunami" viewBox="0 0 16 16">
+          <path
+            d="M.036 12.314a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65zm0 2a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65zM2.662 8.08c-.456 1.063-.994 2.098-1.842 2.804a.5.5 0 0 1-.64-.768c.652-.544 1.114-1.384 1.564-2.43.14-.328.281-.68.427-1.044.302-.754.624-1.559 1.01-2.308C3.763 3.2 4.528 2.105 5.7 1.299 6.877.49 8.418 0 10.5 0c1.463 0 2.511.4 3.179 1.058.67.66.893 1.518.819 2.302-.074.771-.441 1.516-1.02 1.965a1.878 1.878 0 0 1-1.904.27c-.65.642-.907 1.679-.71 2.614C11.076 9.215 11.784 10 13 10h2.5a.5.5 0 0 1 0 1H13c-1.784 0-2.826-1.215-3.114-2.585-.232-1.1.005-2.373.758-3.284L10.5 5.06l-.777.388a.5.5 0 0 1-.447 0l-1-.5a.5.5 0 0 1 .447-.894l.777.388.776-.388a.5.5 0 0 1 .447 0l1 .5a.493.493 0 0 1 .034.018c.44.264.81.195 1.108-.036.328-.255.586-.729.637-1.27.05-.529-.1-1.076-.525-1.495-.426-.42-1.19-.77-2.477-.77-1.918 0-3.252.448-4.232 1.123C5.283 2.8 4.61 3.738 4.07 4.79c-.365.71-.655 1.433-.945 2.16-.15.376-.301.753-.463 1.13z" />
+        </svg></a>
 
-    <!-- Showcase -->
-    <section
-      class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
-      <div class="container">
-        <div class="d-sm-flex align-items-center justify-content-between">
-          <div>
-            <h1>Save the <span class="text-primary"> Ocean </span></h1>
-            <p class="lead my-4">
-              Save the Ocean promotes global awareness of the urgent need to reduce ocean waste and its impact on our planet. We strive to educate individuals, communities, and businesses about the dangers of ocean pollution and inspire the action to save our oceans.
-              We believe that the health of the ocean is vital to the health of our planet, and that by protecting our oceans, we can ensure a sustainable future for generations to come.
-             
-            </p>
-           </div>
-          <img class="img-fluid w-50 d-none d-sm-block" src=""/>
-          <video width="700" height="390" autoplay loop>
-            <source src="images/form2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video> 
-        </div>
-      </div>
-    </section>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <!-- Newsletter -->
-    <section class="bg-info text-dark p-5">
-      <div class="container">
-        <div class="d-md-flex justify-content-between align-items-center">
-          <h3 class="mb-3 mb-md-0">Trash Track (api)</h3>
-
-          <div class="input-group news-input">
-            <input type="text" class="form-control" placeholder="Enter Location" />
-            <button class="btn btn-dark btn-lg" type="button">Submit</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Boxes -->
-    <section class="p-5">
-     <div class="container">
-        <div class="row text-center g-4">
-         
-          <div class="col-md">
-             <!-- box color -->
-             <div class="card custom-bg-color text-dark">
-              <div class="card-body text-center">
-                <div class="h1 mb-3">
-                </div>
-
-                <img src="images/plastic2.jpg" width="300px">
-                <p class="card-text">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Iure, quas quidem possimus dolorum esse eligendi?
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md">
-             <!-- box color -->
-            <div class="card custom-bg-color text-dark">
-              <div class="card-body text-center">
-                <div class="h1 mb-3">
-                </div>
-                <img src="images/turtle.jpg" width="300px">
-                <p class="card-text">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Iure, quas quidem possimus dolorum esse eligendi?
-                </p>
-
-              </div>
-            </div>
-          </div>
- 
-          <div class="col-md">
-            <!-- box color -->
-            <div class="card custom-bg-color text-dark">
-              <div class="card-body text-center">
-                <div class="h1 mb-3">
-                </div>
-                <img src="images/oil2.jpg" width="300px">
-                <p class="card-text">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Iure, quas quidem possimus dolorum esse eligendi?
-                </p>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    <!-- </div>  -->
-    </section>
-
-    <!-- AGRICULTURE-->
-    <section id="learn" class="p-5">
-      <div class="container">
-        <div class="row align-items-center justify-content-between">
-          <div class="col-md">
-            <img src="images/fert.jpg" class="img-fluid" alt="" />
-          </div>
-          <div class="col-md p-5">
-            <h2>Agriculture and Aquaculture </h2>
-            <p class="lead">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Similique deleniti possimus magnam corporis ratione facere!
-            </p>
-            <p>Agricultural runoff occurs when excess fertilizers, pesticides, and other chemicals are washed off of fields during rain events and enter nearby bodies of water. This can lead to eutrophication, harmful algal blooms, and other ecological problems. On the other hand, aquaculture runoff is generated by fish farms and other aquatic operations. Fish waste and uneaten food can accumulate on the bottom of ponds or tanks, and when this material is disturbed it can release nutrients and other pollutants into the surrounding water. Additionally, the use of antibiotics and other chemicals in aquaculture can lead to the development of antibiotic-resistant bacteria and other environmental health risks. Both agricultural and aquaculture runoff can be mitigated through the use of best management practices such as erosion control, nutrient management, and proper waste disposal. Additionally, regulatory frameworks and public awareness campaigns can help to promote sustainable practices and reduce the impacts of non-point source pollution on water resources.</p>
-            <a href="https://www.nomomente.org/post/agricultural-runoff-and-water-pollution" target="_blank" class="btn btn-primary mt-3">
-              <i class="bi bi-chevron-right"></i> Read More
-            </a>
-           </div>
-        </div>
-      </div>
-    </section>
-    <!-- MANIFACTURING-->
-    <section id="learn" class="p-5 bg-dark text-light">
-        <div class="container">
-          <div class="row align-items-center">
-            <div class="col-md-6 p-5">
-              <h2>Manufacturing Impact </h2>
-              <p class="lead">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique
-                deleniti possimus magnam corporis ratione facere!
-              </p>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
-                reiciendis eius autem eveniet mollitia, at asperiores suscipit quae
-                similique laboriosam iste minus placeat odit velit quos, nulla
-                architecto amet voluptates?
-              </p>
-              <a href="https://oursharedseas.com/threats/threats-industrial-impacts/" target="_blank" class="btn btn-primary mt-3">
-                <i class="bi bi-chevron-right"></i> Read More
-              </a>
-            </div>
-            <div class="col-md-6">
-              <video width="570" height="360" autoplay loop>
-                <source src="images/production.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </div>
-        </div>  
-      </section>
-      <!-- GLOBAL WARMING -->
-      <section id="global" class="p-5">
-        <div class="container">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-md">
-              <img src="images/penguin.jpg" height="600px" class="img-fluid" />
-            </div>
-            <div class="col-md p-5">
-              <h2>Global Warming</h2>
-              <p class="lead">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Similique deleniti possimus magnam corporis ratione facere!
-              </p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum magni molestiae delectus vitae iure assumenda, minima perspiciatis rerum dicta labore est neque, debitis accusantium! Quidem, sequi? Beatae magnam alias quia!</p>
-              
-             </div>
-          </div>
-        </div>
-      </section>
-   
-    <!-- Help -->
-    <section id="questions" class="p-5">
-      <div class="container">
-        <h2 class="text-center mb-4">Things You Can Do To Help</h2>
-        <div class="accordion accordion-flush" id="questions">
-          <!-- Item 1 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#question-one">
-                At Home
-              </button>
-            </h2>
-            <div id="question-one"
-              class="accordion-collapse collapse"
-              data-bs-parent="#questions">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                beatae fuga animi distinctio perspiciatis adipisci velit maiores
-                totam tempora accusamus modi explicabo accusantium consequatur,
-                praesentium rem quisquam molestias at quos vero. Officiis ad
-                velit doloremque at. Dignissimos praesentium necessitatibus
-                natus corrupti cum consequatur aliquam! Minima molestias iure
-                quam distinctio velit.
-              </div>
-            </div>
-          </div>
-          <!-- Item 2 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed"
-                type="button" data-bs-toggle="collapse" data-bs-target="#question-two">
-                Near the water
-              </button>
-            </h2>
-            <div
-              id="question-two"
-              class="accordion-collapse collapse"
-              data-bs-parent="#questions">
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                beatae fuga animi distinctio perspiciatis adipisci velit maiores
-                totam tempora accusamus modi explicabo accusantium consequatur,
-                praesentium rem quisquam molestias at quos vero. Officiis ad
-                velit doloremque at. Dignissimos praesentium necessitatibus
-                natus corrupti cum consequatur aliquam! Minima molestias iure
-                quam distinctio velit.
-              </div>
-            </div>
-          </div>
-          <!-- Item 3 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#question-three"
-              >
-                What do I need to Know?
-              </button>
-            </h2>
-            <div
-              id="question-three"
-              class="accordion-collapse collapse"
-              data-bs-parent="#questions"
-            >
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                beatae fuga animi distinctio perspiciatis adipisci velit maiores
-                totam tempora accusamus modi explicabo accusantium consequatur,
-                praesentium rem quisquam molestias at quos vero. Officiis ad
-                velit doloremque at. Dignissimos praesentium necessitatibus
-                natus corrupti cum consequatur aliquam! Minima molestias iure
-                quam distinctio velit.
-              </div>
-            </div>
-          </div>
-          <!-- Item 4 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#question-four"
-              >
-                How Do I sign up?
-              </button>
-            </h2>
-            <div
-              id="question-four"
-              class="accordion-collapse collapse"
-              data-bs-parent="#questions"
-            >
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                beatae fuga animi distinctio perspiciatis adipisci velit maiores
-                totam tempora accusamus modi explicabo accusantium consequatur,
-                praesentium rem quisquam molestias at quos vero. Officiis ad
-                velit doloremque at. Dignissimos praesentium necessitatibus
-                natus corrupti cum consequatur aliquam! Minima molestias iure
-                quam distinctio velit.
-              </div>
-            </div>
-          </div>
-          <!-- Item 5 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#question-five"
-              >
-                Do you help me find a job?
-              </button>
-            </h2>
-            <div
-              id="question-five"
-              class="accordion-collapse collapse"
-              data-bs-parent="#questions"
-            >
-              <div class="accordion-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                beatae fuga animi distinctio perspiciatis adipisci velit maiores
-                totam tempora accusamus modi explicabo accusantium consequatur,
-                praesentium rem quisquam molestias at quos vero. Officiis ad
-                velit doloremque at. Dignissimos praesentium necessitatibus
-                natus corrupti cum consequatur aliquam! Minima molestias iure
-                quam distinctio velit.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="recycle" class="p-5 bg-success">
-      <div class="container">
-        <h2 class="text-center text-white">RECYCLABLES <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
-          <path d="M9.302 1.256a1.5 1.5 0 0 0-2.604 0l-1.704 2.98a.5.5 0 0 0 .869.497l1.703-2.981a.5.5 0 0 1 .868 0l2.54 4.444-1.256-.337a.5.5 0 1 0-.26.966l2.415.647a.5.5 0 0 0 .613-.353l.647-2.415a.5.5 0 1 0-.966-.259l-.333 1.242-2.532-4.431zM2.973 7.773l-1.255.337a.5.5 0 1 1-.26-.966l2.416-.647a.5.5 0 0 1 .612.353l.647 2.415a.5.5 0 0 1-.966.259l-.333-1.242-2.545 4.454a.5.5 0 0 0 .434.748H5a.5.5 0 0 1 0 1H1.723A1.5 1.5 0 0 1 .421 12.24l2.552-4.467zm10.89 1.463a.5.5 0 1 0-.868.496l1.716 3.004a.5.5 0 0 1-.434.748h-5.57l.647-.646a.5.5 0 1 0-.708-.707l-1.5 1.5a.498.498 0 0 0 0 .707l1.5 1.5a.5.5 0 1 0 .708-.707l-.647-.647h5.57a1.5 1.5 0 0 0 1.302-2.244l-1.716-3.004z"/>
-        </svg></h2>
-        
-        <p class="lead text-center text-white mb-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque officia sint aperiam quos nulla sapiente nemo quam. Porro, consectetur ipsa dolor quasi eius atque reiciendis praesentium nam itaque obcaecati blanditiis.
-        </p>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="card bg-light">
-                  <div class="card-body text-center">
-                    <img
-                      src=""
-                      class="rounded-circle mb-3"
-                      alt=""
-                    />
-                    <h3 class="card-title mb-3">PLASTIC</h3>
-                    <p class="card-text">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3" alt=""/>
-                <h3 class="card-title mb-3">METAL</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3"
-                  alt=""/>
-                <h3 class="card-title mb-3">PAPER</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3" alt=""/>
-                <h3 class="card-title mb-3">Misc.</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> 
-<!-- feedback form -->
-    <div class="wrapper">
-      <div class="container-form">
-        <div class="title">
-          <h2>Community Contribution<hr></h2>
-        </div>
-        <form class="form" action="/form/submit" method="POST">
-          <label for="name">First Name</label>
-          <input class="form-input" type="text" name="name" id="name">
-          <label for="name">Last Name</label>
-          <input class="form-input" type="text" name="name" id="name">
-          <label for="email">Email</label>
-          <input class="form-input" type="text" name="email" id="email">
-          <label for="email">Location</label>
-          <input class="form-input" type="text" name="location" id="location">
-          <label for="email">Amount</label>
-          <input class="form-input" type="email" name="amount" id="amount">
-          <label for="email">Material Type</label>
-          <input class="form-input" type="email" name="material" id="material">
-          <!-- <label>Message</label>
-          <textarea class="form-textarea" type="text"></textarea> -->
-          <input type="submit" value="Submit">
-        </form>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="#learn" class="nav-link">Impact</a>
+          </li>
+          <li class="nav-item">
+            <a href="#global" class="nav-link">Global Warming</a>
+          </li>
+          <li class="nav-item">
+            <a href="#questions" class="nav-link">Get Involved</a>
+          </li>
+        </ul>
       </div>
     </div>
-     
-        <!-- MEET THE TEAM -->
-    <section id="recycle" class="p-5 bg-light">
-      <div class="container">
-        <h2 class="text-center text-primary">Meet the Team! </h2>
-        
-        <p class="lead text-center text-dark mb-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque officia sint aperiam quos nulla sapiente nemo quam. Porro, consectetur ipsa dolor quasi eius atque reiciendis praesentium nam itaque obcaecati blanditiis.
-        </p>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="card bg-light">
-                  <div class="card-body text-center">
-                    <img
-                      src=""
-                      class="rounded-circle mb-3"
-                      alt=""
-                    />
-                    <h3 class="card-title mb-3">Katerin</h3>
-                    <p class="card-text">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                    </p>
-                  </div>
-                </div>
-              </div>
+  </nav>
 
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3" alt=""/>
-                <h3 class="card-title mb-3">Ching</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
+  <!-- MAIN CONTENT -->
+  <section class="bg-dark text-light p-5 p-lg-0 pt-lg-5 text-center text-sm-start">
+    <div class="container">
+      <div class="d-sm-flex align-items-center justify-content-between">
+        <div>
+          <h1>Save the <span class="text-primary"> Ocean </span></h1>
+          <p class="lead my-4">
+            Save the Ocean promotes global awareness of the urgent need to reduce ocean waste and its impact on our
+            planet. We strive to educate individuals, communities, and businesses about the dangers of ocean pollution
+            and inspire the action to save our oceans.
+            We believe that the health of the ocean is vital to the health of our planet, and that by protecting our
+            oceans, we can ensure a sustainable future for generations to come.
+
+          </p>
+        </div>
+        <img class="img-fluid w-50 d-none d-sm-block" src="" />
+        <video width="700" height="390" autoplay loop>
+          <source src="images/form2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRASH API -->
+  <section class="bg-info text-dark p-5">
+    <div class="container">
+      <div class="d-md-flex justify-content-between align-items-center">
+        <h3 class="mb-3 mb-md-0">Trash Tracker</h3>
+        <form>
+          <label for="latitude-input">Latitude:</label>
+          <input type="text" id="latitude-input">
+          <br>
+          <label for="longitude-input">Longitude:</label>
+          <input type="text" id="longitude-input">
+          <br>
+          <label for="radius-input">Radius (km):</label>
+          <input type="text" id="radius-input">
+          <br>
+          <button type="button" id="get-litter-btn">Get Litter Data</button>
+        </form>
+        <div id="litter-output"></div>
+        <!-- <div class="input-group news-input">
+          <input type="text" class="form-control" placeholder="Enter Location" />
+          <button class="btn btn-dark btn-lg" type="button">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BOX IMAGES -->
+  <div class="image-container">
+    <div class="column">
+      <img src="images/fish.jpg" alt="Fish" style="width:100%">
+    </div>
+    <div class="column">
+      <img src="images/rec.jpg" alt="Rec" style="width:100%">
+    </div>
+    <div class="column">
+      <img src="images/turtle.jpg" alt="Turtle" style="width:100%">
+    </div>
+  </div>
+  <!-- AGRICULTURE-->
+  <section id="learn" class="p-5">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-md">
+          <img src="images/fert.jpg" class="img-fluid" alt="" />
+        </div>
+        <div class="col-md p-5">
+          <h2>Agriculture and Aquaculture </h2>
+          <p>Agricultural runoff occurs when excess fertilizers, pesticides, and other chemicals are washed off of
+            fields during rain events and enter nearby bodies of water. This can lead to eutrophication, harmful algal
+            blooms, and other ecological problems. On the other hand, aquaculture runoff is generated by fish farms and
+            other aquatic operations. Fish waste and uneaten food can accumulate on the bottom of ponds or tanks, and
+            when this material is disturbed it can release nutrients and other pollutants into the surrounding water.
+            Additionally, the use of antibiotics and other chemicals in aquaculture can lead to the development of
+            antibiotic-resistant bacteria and other environmental health risks. Both agricultural and aquaculture runoff
+            can be mitigated through the use of best management practices such as erosion control, nutrient management,
+            and proper waste disposal. Additionally, regulatory frameworks and public awareness campaigns can help to
+            promote sustainable practices and reduce the impacts of non-point source pollution on water resources.</p>
+          <a href="https://www.nomomente.org/post/agricultural-runoff-and-water-pollution" target="_blank"
+            class="btn btn-primary mt-3">
+            <i class="bi bi-chevron-right"></i> Read More
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MANUFACTURING-->
+  <section id="learn" class="p-5 bg-dark text-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 p-5">
+          <h2>Manufacturing Impact </h2>
+          <p>Manufacturing can have significant negative effects on the ocean, including pollution, habitat destruction,
+            climate change, and overfishing. These impacts can harm marine ecosystems and the services they provide to
+            humans, such as food, recreation, and tourism. Therefore, it is crucial for manufacturing industries to
+            adopt sustainable practices that minimize their environmental footprint and protect the ocean. This can
+            include reducing greenhouse gas emissions, using eco-friendly materials and processes, implementing
+            wastewater treatment technologies, and avoiding harmful fishing practices. Additionally, individuals can
+            play a role in promoting sustainable manufacturing by choosing products that are responsibly sourced,
+            recycled, or made from renewable resources.</p>
+          <a href="https://oursharedseas.com/threats/threats-industrial-impacts/" target="_blank"
+            class="btn btn-primary mt-3">
+            <i class="bi bi-chevron-right"></i> Read More
+          </a>
+        </div>
+        <div class="col-md-6">
+          <video width="570" height="360" autoplay loop>
+            <source src="images/production.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- GLOBAL WARMING -->
+  <section id="global" class="p-5">
+    <div class="container">
+      <div class="row align-items-center justify-content-between">
+        <div class="col-md">
+          <img src="images/penguin.jpg" height="600px" class="img-fluid" />
+        </div>
+        <div class="col-md p-5">
+          <h2>Global Warming</h2>
+          <p class="lead">
+            Global warming has increased over time, with the average global temperature rising by about 1.2°C (2.2°F)
+            since the late 19th century.</p>
+          <p>This has led to melting ice, which contributes to sea level rise and alters ocean circulation patterns.
+            Heat waves are becoming more frequent and intense in many parts of the world, leading to increased risk of
+            heat-related illness and death. Climate change is also causing shifts in precipitation patterns, with some
+            areas experiencing more frequent and severe droughts while others experience more frequent and severe
+            flooding. Additionally, ocean acidification is becoming more severe as carbon dioxide is absorbed by the
+            ocean, which can have significant impacts on marine ecosystems and food webs. Finally, extreme weather
+            events such as hurricanes, wildfires, and floods are becoming more frequent and severe, which can have
+            significant impacts on human communities and infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- GLOBAL WARMING API -->
+  <section class="bg-info text-dark p-5">
+    <div class="containertwo">
+      <div class="d-md-flex justify-content-between align-items-center">
+        <h3 class="mb-3 mb-md-0">Ocean Elevation Tracker</h3>
+        <label for="location-input">Enter a location:</label>
+        <input type="text" id="location-input">
+        <button id="get-elevation-btn">Get Elevation</button>
+
+        <div id="elevation-output"></div>
+
+        <!-- <script src="app.js"></script> -->
+        <!-- <div class="input-group news-input">
+          <button class="btn btn-dark btn-lg" type="button">Submit</button>
+          <input type="text" class="form-control" placeholder="Ocean Elevation" /> -->
+      </div>
+    </div>
+    </div>
+  </section>
+  <!-- ACORDION INFO -->
+  <section id="questions" class="p-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Things You Can Do To Help</h2>
+      <div class="accordion accordion-flush" id="questions">
+        <!-- Item 1 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#question-one">
+              At Home
+            </button>
+          </h2>
+          <div id="question-one" class="accordion-collapse collapse" data-bs-parent="#questions">
+            <div class="accordion-body">
+              Reduce your use of single-use plastics. Single-use plastics, such as straws, plastic bags, and plastic
+              water bottles. For example, bring your own reusable bags to the grocery store, use a refillable water
+              bottle instead of buying bottled water, and opt for reusable straws made of bamboo, metal, or glass
+              instead of plastic ones.
             </div>
           </div>
-
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3"
-                  alt=""/>
-                <h3 class="card-title mb-3">Brandon</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
+        </div>
+        <!-- Item 2 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#question-two">
+              Near the water
+            </button>
+          </h2>
+          <div id="question-two" class="accordion-collapse collapse" data-bs-parent="#questions">
+            <div class="accordion-body">
+              <p>Bring a bag or bucket with you to the beach and collect any litter or debris you find, including
+                plastics, cigarette butts, and food wrappers. Use reef-safe sunscreen: Some sunscreen ingredients can
+                harm coral reefs and other marine life. Choose a sunscreen that is labeled "reef-safe" or
+                "ocean-friendly." Remember, even small actions can make a big difference in protecting our oceans and
+                beaches!</p>
             </div>
           </div>
+        </div>
+        <!-- Item 3 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#question-three">
+              Support the Ocean
+            </button>
+          </h2>
+          <div id="question-three" class="accordion-collapse collapse" data-bs-parent="#questions">
+            <div class="accordion-body">
+              Donate to organizations that are working to protect the ocean and marine life, such as the Ocean
+              Conservancy, Surfrider Foundation, or The Ocean Foundation. You can also volunteer your time or
+              participate in fundraising events to support their efforts. By supporting these organizations, you can
+              help ensure that our oceans are healthy and protected for generations to come.
+            </div>
+          </div>
+        </div>
+        <!-- Item 4 -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#question-four">
+              Reduce Carbon Footprint
+            </button>
+          </h2>
+          <div id="question-four" class="accordion-collapse collapse" data-bs-parent="#questions">
+            <div class="accordion-body">
+              Reduce your carbon footprint. By reducing your carbon footprint, you can help slow the pace of climate
+              change and mitigate its impacts on the ocean. Some ways to reduce your carbon footprint include using
+              public transportation, biking or walking instead of driving, reducing meat consumption, and conserving
+              energy at home.
+            </div>
+          </div>
+        </div>
+  </section>
+  <!-- RECYCLABLES -->
+  <section id="recycle" class="p-5 bg-success">
+    <div class="container">
+      <h2 class="text-center text-white">RECYCLABLES <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+          fill="currentColor" class="bi bi-recycle" viewBox="0 0 16 16">
+          <path
+            d="M9.302 1.256a1.5 1.5 0 0 0-2.604 0l-1.704 2.98a.5.5 0 0 0 .869.497l1.703-2.981a.5.5 0 0 1 .868 0l2.54 4.444-1.256-.337a.5.5 0 1 0-.26.966l2.415.647a.5.5 0 0 0 .613-.353l.647-2.415a.5.5 0 1 0-.966-.259l-.333 1.242-2.532-4.431zM2.973 7.773l-1.255.337a.5.5 0 1 1-.26-.966l2.416-.647a.5.5 0 0 1 .612.353l.647 2.415a.5.5 0 0 1-.966.259l-.333-1.242-2.545 4.454a.5.5 0 0 0 .434.748H5a.5.5 0 0 1 0 1H1.723A1.5 1.5 0 0 1 .421 12.24l2.552-4.467zm10.89 1.463a.5.5 0 1 0-.868.496l1.716 3.004a.5.5 0 0 1-.434.748h-5.57l.647-.646a.5.5 0 1 0-.708-.707l-1.5 1.5a.498.498 0 0 0 0 .707l1.5 1.5a.5.5 0 1 0 .708-.707l-.647-.647h5.57a1.5 1.5 0 0 0 1.302-2.244l-1.716-3.004z" />
+        </svg></h2>
+      <p class="lead text-center text-white mb-5"></p>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="" class="rounded-circle mb-3" alt="" />
+              <h3 class="card-title mb-3">PLASTIC</h3>
+              <p class="card-text">
+                Plastic containers (with necks only).
+              </p>
+            </div>
+          </div>
+        </div>
 
-          <div class="col-md-6 col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <img src="" class="rounded-circle mb-3" alt=""/>
-                <h3 class="card-title mb-3">Antonio</h3>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Assumenda accusamus nobis sed cupiditate iusto? Quibusdam.
-                </p>
-              </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="" class="rounded-circle mb-3" alt="" />
+              <h3 class="card-title mb-3">METAL</h3>
+              <p class="card-text"> Empty aerosal cans, aluminum cans, tin/steel cans.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="" class="rounded-circle mb-3" alt="" />
+              <h3 class="card-title mb-3">PAPER</h3>
+              <p class="card-text">
+                Cartons, juice boxes, cereal boxes, cardboard boxes, junk mail, magazine/newspapers, clean pizza boxes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="" class="rounded-circle mb-3" alt="" />
+              <h3 class="card-title mb-3">Misc.</h3>
+              <p class="card-text">
+                Glass bottles and jars.
+              </p>
             </div>
           </div>
         </div>
       </div>
-    </section> 
-    <!-- Location -->
-    <section class="p-5">
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-md">
-            <h2 class="text-center mb-4"></h2>
-            <ul class="list-group list-group-flush lead">
-              <li class="list-group-item">
-                <span class="fw-bold">Main Location:</span> Charlotte, NC
-              </li>
-              <li class="list-group-item"> 
-                <span class="fw-bold">Phone:</span> (555) 555-5555
-              </li>
-              <li class="list-group-item">
-                <span class="fw-bold">Fax:</span> (333) 333-3333
-              </li>
-              <li class="list-group-item">
-                <span class="fw-bold">Contact Email:</span> (555)
-                SaveThe@Ocean.org
-              </li>
-             
-            </ul>
+    </div>
+  </section>
+  <!-- ANTONIO'S FEEDBACK FORM -->
+
+  <!-- MEET THE TEAM -->
+  <section id="recycle" class="p-5 bg-light">
+    <div class="container">
+      <h2 class="text-center text-primary">Meet the Team! </h2>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="images/kat.png" class="rounded-circle mb-3" alt="" width="200px" />
+              <h3 class="card-title mb-3">Katerin Ercila</h3>
+            </div>
           </div>
-          <div class="col-md">
-            <div id="map"></div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="images/ching.png" class="rounded-circle mb-3" alt="" width="200px" />
+              <h3 class="card-title mb-3">Ching Vang</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="images/brandon.png" class="rounded-circle mb-3" alt="" width="200px" />
+              <h3 class="card-title mb-3">Brandon Lopez</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <img src="images/antonio.png" class="rounded-circle mb-3" alt="" width="200px" />
+              <h3 class="card-title mb-3">Antonio Askew</h3>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <!-- Footer -->
-    <footer class="p-5 bg-dark text-white text-center position-relative">
-      <div class="container">
-        <div class="social">
-            <a href="https://www.facebook.com"><img src="images/_facebook.png" width="24px"></a>
-            <a href="https://www.twitter.com"><img src="images/_twitter.png" width="24px"></a>
-            <a href="https://www.instagram.com"><img src="images/_instagram.png" width="24px"></a>
-            <a href="https:/www.github.com"><img src="images/_github.png" width="24px"></a>
-            <a href="https:/www.reddit.com"><img src="images/_reddit.png" width="24px"></a>
+    </div>
+  </section>
+  <!-- LOCATION -->
+  <section class="p-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md">
+          <h2 class="text-center mb-4"></h2>
+          <ul class="list-group list-group-flush lead">
+            <li class="list-group-item">
+              <span class="fw-bold">Main Location:</span> Charlotte, NC
+            </li>
+            <li class="list-group-item">
+              <span class="fw-bold">Phone:</span> (555) 555-5555
+            </li>
+            <li class="list-group-item">
+              <span class="fw-bold">Fax:</span> (333) 333-3333
+            </li>
+            <li class="list-group-item">
+              <span class="fw-bold">Contact Email:</span> (555)
+              SaveThe@Ocean.org
+            </li>
+
+          </ul>
         </div>
-        <p class="lead">HOPE-Environmental, Ocean Waste &copy; Katerin, Ching, Brandon, Antonio</p>
-        <p><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-globe-americas" viewBox="0 0 16 16">
-          <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484-.08.08-.162.158-.242.234-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z"/>
+        <div class="col-md">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- FEEDBACK ? -->
+  <div class="feedback">
+    <label for="select-box">Did you find this website helpful?</label>
+    <select>
+      <option value="apple">Yes</option>
+      <option value="banana">No</option>
+    </select>
+    <input type="submit" value="Submit">
+  </div>
+  <!-- FOOTER -->
+  <footer class="p-5 bg-dark text-white text-center position-relative">
+    <div class="footercontainer">
+      <div class="social">
+        <a href="https://www.facebook.com"><img src="images/_facebook.png" width="24px"></a>
+        <a href="https://www.twitter.com"><img src="images/_twitter.png" width="24px"></a>
+        <a href="https://www.instagram.com"><img src="images/_instagram.png" width="24px"></a>
+        <a href="https:/www.github.com"><img src="images/_github.png" width="24px"></a>
+        <a href="https:/www.reddit.com"><img src="images/_reddit.png" width="24px"></a>
+      </div>
+      <p class="lead">HOPE-Environmental, Ocean Waste &copy; Katerin, Ching, Brandon, Antonio</p>
+      <p><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-globe-americas"
+          viewBox="0 0 16 16">
+          <path
+            d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2.04 4.326c.325 1.329 2.532 2.54 3.717 3.19.48.263.793.434.743.484-.08.08-.162.158-.242.234-.416.396-.787.749-.758 1.266.035.634.618.824 1.214 1.017.577.188 1.168.38 1.286.983.082.417-.075.988-.22 1.52-.215.782-.406 1.48.22 1.48 1.5-.5 3.798-3.186 4-5 .138-1.243-2-2-3.5-2.5-.478-.16-.755.081-.99.284-.172.15-.322.279-.51.216-.445-.148-2.5-2-1.5-2.5.78-.39.952-.171 1.227.182.078.099.163.208.273.318.609.304.662-.132.723-.633.039-.322.081-.671.277-.867.434-.434 1.265-.791 2.028-1.12.712-.306 1.365-.587 1.579-.88A7 7 0 1 1 2.04 4.327Z" />
         </svg></p>
 
-        <a href="#" class="position-absolute bottom-0 end-0 p-5">
-<i class="bi bi-arrow-up-circle h1"></i>
-        </a>
-      </div>
-    </footer>
+      <a href="#" class="position-absolute bottom-0 end-0 p-5">
+        <i class="bi bi-arrow-up-circle h1"></i>
+      </a>
+    </div>
+  </footer>
 
-<script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-      crossorigin="anonymous"></script>
-    </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+</body>
+
 </html>
