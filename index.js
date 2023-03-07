@@ -20,7 +20,7 @@ app.set('view engine', 'hbs');
   const options = {
     method: 'GET',
     url: 'https://climate-news-feed.p.rapidapi.com/page/1',
-    qs: {limit: '10'},
+    qs: {limit: '5'},
     headers: {
       'X-RapidAPI-Key': '13d1b5e584mshf26bb79cd8c3801p1aba3fjsn419eecd14937',
       'X-RapidAPI-Host': 'climate-news-feed.p.rapidapi.com',
@@ -37,6 +37,58 @@ app.set('view engine', 'hbs');
   //     if(res.statusCode === 200){finishedAPI(body)}
   // });
 }
+
+const API_KEY = '6bd03f1a-b930-11ed-bc36-0242ac130002-6bd03f92-b930-11ed-bc36-0242ac130002';
+
+const getElevationData = async (lat, lng) => {
+  const url = `https://api.stormglass.io/v2/elevation/point?lat=${lat}&lng=${lng}`;
+
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': API_KEY
+    }
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
+const getLocationData = async (location) => {
+  const url = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  return data[0];
+};
+
+const handleGetElevationClick = async () => {
+  const locationInput = document.getElementById('location-input');
+  const elevationOutput = document.getElementById('elevation-output');
+
+  const location = locationInput.value;
+
+  try {
+    // Use the OpenStreetMap Nominatim API to get the latitude and longitude of the location
+    const locationData = await getLocationData(location);
+    const latLng = {
+      lat: locationData.lat,
+      lng: locationData.lon
+    };
+
+    // Get the elevation data from the Stormglass API
+    const elevationData = await getElevationData(latLng.lat, latLng.lng);
+    console.log(elevationData)
+    console.log(typeof elevationData.data)
+    elevationOutput.textContent = `Elevation: ${elevationData.data.elevation}`;
+  } catch (error) {
+    elevationOutput.textContent = `Error: ${error.message}`;
+  }
+};
+
+// const getElevationBtn = document.getElementById('get-elevation-btn');
+// getElevationBtn.addEventListener('click', handleGetElevationClick);
 
 
 // Define a route handler for the root URL
@@ -117,56 +169,3 @@ app.listen(8000, () => {
 //ocean elavation api
 
 // const API_KEY = 'e881ff5c-b841-11ed-a654-0242ac130002-e882009c-b841-11ed-a654-0242ac130002';
-const API_KEY = '6bd03f1a-b930-11ed-bc36-0242ac130002-6bd03f92-b930-11ed-bc36-0242ac130002';
-
-const getElevationData = async (lat, lng) => {
-  const url = `https://api.stormglass.io/v2/elevation/point?lat=${lat}&lng=${lng}`;
-
-  const response = await fetch(url, {
-    headers: {
-      'Authorization': API_KEY
-    }
-  });
-
-  const data = await response.json();
-
-  return data;
-};
-
-const getLocationData = async (location) => {
-  const url = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
-
-  const response = await fetch(url);
-  const data = await response.json();
-
-  return data[0];
-};
-
-const handleGetElevationClick = async () => {
-  const locationInput = document.getElementById('location-input');
-  const elevationOutput = document.getElementById('elevation-output');
-
-  const location = locationInput.value;
-
-  try {
-    // Use the OpenStreetMap Nominatim API to get the latitude and longitude of the location
-    const locationData = await getLocationData(location);
-    const latLng = {
-      lat: locationData.lat,
-      lng: locationData.lon
-    };
-
-    // Get the elevation data from the Stormglass API
-    const elevationData = await getElevationData(latLng.lat, latLng.lng);
-    console.log(elevationData)
-    console.log(typeof elevationData.data)
-    elevationOutput.textContent = `Elevation: ${elevationData.data.elevation}`;
-  } catch (error) {
-    elevationOutput.textContent = `Error: ${error.message}`;
-  }
-};
-
-// const getElevationBtn = document.getElementById('get-elevation-btn');
-// getElevationBtn.addEventListener('click', handleGetElevationClick);
-
-
