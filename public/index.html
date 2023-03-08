@@ -72,19 +72,11 @@
     <div class="container">
       <div class="d-md-flex justify-content-between align-items-center">
         <h3 class="mb-3 mb-md-0">Trash Tracker</h3>
-        <form>
-          <label for="latitude-input">Latitude:</label>
-          <input type="text" id="latitude-input">
-          <br>
-          <label for="longitude-input">Longitude:</label>
-          <input type="text" id="longitude-input">
-          <br>
-          <label for="radius-input">Radius (km):</label>
-          <input type="text" id="radius-input">
-          <br>
-          <button type="button" id="get-litter-btn">Get Litter Data</button>
+        <h3>{{{trash.features.length}}}</h3>
+        <form class="input-group news-input" role="search" action="/" method="POST">
+          <input type="text" class="form-control" placeholder="Enter Location" name="location" />
+          <button class="btn btn-dark btn-lg" type="button">Submit</button>
         </form>
-        <div id="litter-output"></div>
       </div>
     </div>
   </section>
@@ -166,39 +158,44 @@
         <div class="col-md p-5">
           <h2>Global Warming</h2>
           <p class="lead">
-            Global warming has increased over time, with the average global temperature rising by about 1.2°C (2.2°F)
-            since the late 19th century.</p>
-          <p>This has led to melting ice, which contributes to sea level rise and alters ocean circulation patterns.
-            Heat waves are becoming more frequent and intense in many parts of the world, leading to increased risk of
-            heat-related illness and death. Climate change is also causing shifts in precipitation patterns, with some
-            areas experiencing more frequent and severe droughts while others experience more frequent and severe
-            flooding. Additionally, ocean acidification is becoming more severe as carbon dioxide is absorbed by the
-            ocean, which can have significant impacts on marine ecosystems and food webs. Finally, extreme weather
-            events such as hurricanes, wildfires, and floods are becoming more frequent and severe, which can have
-            significant impacts on human communities and infrastructure.</p>
+            Global warming has increased over time, with the average global temperature rising by about 1.2°C (2.2°F) since the late 19th century.</p>
+<p>This has led to melting ice, which contributes to sea level rise and alters ocean circulation patterns. Heat waves are becoming more frequent and intense in many parts of the world, leading to increased risk of heat-related illness and death. Climate change is also causing shifts in precipitation patterns, with some areas experiencing more frequent and severe droughts while others experience more frequent and severe flooding. Additionally, ocean acidification is becoming more severe as carbon dioxide is absorbed by the ocean, which can have significant impacts on marine ecosystems and food webs. Finally, extreme weather events such as hurricanes, wildfires, and floods are becoming more frequent and severe, which can have significant impacts on human communities and infrastructure.</p>              
+</section>
+<!-- NEWS API -->
+  <div class="newscards">         
+    <div class="card" style="width: 18rem;">
+        <img src="{{{news.articles.[0].thumbnail}}}" class="card-img-top" alt="logo">
+        <div class="card-body">
+            <h5 class="card-title">{{{news.articles.[0].title}}}</h5>
+            <p class="card-text">Published date: {{{news.articles.[0].published}}}</p>
+            <a href="{{{news.articles.[0].url}}}" class="btn btn-primary">{{{news.articles.[0].source}}}</a>
         </div>
-      </div>
     </div>
-  </section>
-  <!-- GLOBAL WARMING API -->
-  <section class="bg-info text-dark p-5">
-    <div class="containertwo">
-      <div class="d-md-flex justify-content-between align-items-center">
-        <h3 class="mb-3 mb-md-0">Ocean Elevation Tracker</h3>
-        <label for="location-input">Enter a location:</label>
-        <input type="text" id="location-input">
-        <button id="get-elevation-btn">Get Elevation</button>
-
-        <div id="elevation-output"></div>
-
-        <!-- <script src="app.js"></script> -->
-        <!-- <div class="input-group news-input">
-          <button class="btn btn-dark btn-lg" type="button">Submit</button>
-          <input type="text" class="form-control" placeholder="Ocean Elevation" /> -->
-      </div>
+    <div class="card" style="width: 18rem;">
+        <img src="{{{news.articles.[1].thumbnail}}}" class="card-img-top" alt="logo">
+        <div class="card-body">
+            <h5 class="card-title">{{{news.articles.[1].title}}}</h5>
+            <p class="card-text">Published date: {{{news.articles.[1].published}}}</p>
+            <a href="{{{news.articles.[1].url}}}" class="btn btn-primary">{{{news.articles.[1].source}}}</a>
+        </div>
     </div>
+</div>
+</div>
+</div>
+</div>
+<!-- GLOBAL WARMING API -->
+<section class="bg-info text-dark p-5">
+  <div class="containertwo">
+    <div class="d-md-flex justify-content-between align-items-center">
+      <h3 class="mb-3 mb-md-0"></h3>
+      <h1>{{{elevation.data.elevation}}}</h1>
+      <div class="input-group news-input">
+        <button class="btn btn-dark btn-lg" type="search">Submit</button>
+        <input type="search" class="form-control" placeholder="Ocean Elevation" name="location"/>
+       </div>
     </div>
-  </section>
+  </div>
+</section>
   <!-- ACORDION INFO -->
   <section id="questions" class="p-5">
     <div class="container">
@@ -332,8 +329,6 @@
       </div>
     </div>
   </section>
-  <!-- ANTONIO'S FEEDBACK FORM -->
-
   <!-- MEET THE TEAM -->
   <section id="recycle" class="p-5 bg-light">
     <div class="container">

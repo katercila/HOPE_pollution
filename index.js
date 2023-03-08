@@ -64,7 +64,7 @@ function elevation(lat, lng, finishedAPI) {
     method: 'GET',
     url: url,
     headers: {
-      'Authorization': 'e881ff5c-b841-11ed-a654-0242ac130002-e882009c-b841-11ed-a654-0242ac130002',
+      'Authorization': '6bd03f1a-b930-11ed-bc36-0242ac130002-6bd03f92-b930-11ed-bc36-0242ac130002',
       useQueryString: true
     },
     json: true
@@ -78,7 +78,7 @@ function elevation(lat, lng, finishedAPI) {
 
 const apiUrl = 'https://services3.arcgis.com/pI4ewELlDKS2OpCN/arcgis/rest/services/SDG_14_1_1_Plastic_debris_density/FeatureServer/0/query';
 
-const getLitterData = async (latitude, longitude, radius=500) => {
+const getLitterData = async (latitude=41.3601, longitude=-71.0589, radius=500) => {
   const params = new URLSearchParams({
     where: '1=1',
     outFields: '*',
@@ -105,11 +105,90 @@ const getLitterData = async (latitude, longitude, radius=500) => {
 // Define a route handler for the root URL
 // This renders the "main.hbs" view using the Handlebars templating engine
 app.get('/', function(req, res) {
-  call_article(function(doneAPI) {
-    res.render('home', {
-      news: doneAPI
-    });
-  })
+  let newsData, elevationData, trashData;
+  call_article(function (doneAPI) {
+    newsData = doneAPI;
+    if (elevationData && trashData) {
+      res.render('./layouts/main', {
+        news: newsData,
+        elevation: elevationData,
+        trash: trashData
+      });
+    }
+  });
+  location(req.body.location, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      elevation(data.lat, data.lng, (data) => {
+        elevationData = data;
+        if (newsData && trashData) {
+          res.render('./layouts/main', {
+            news: newsData,
+            elevation: elevationData,
+            trash: trashData
+          });
+        }
+      });
+      getLitterData(data.lat, data.lng)
+        .then((data) => {
+          trashData = data;
+          if (newsData && elevationData) {
+            res.render('./layouts/main', {
+              news: newsData,
+              elevation: elevationData,
+              trash: trashData
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  });
+});
+app.post('/', function(req, res) {
+  let newsData, elevationData, trashData;
+  call_article(function (doneAPI) {
+    newsData = doneAPI;
+    if (elevationData && trashData) {
+      res.render('./layouts/main', {
+        news: newsData,
+        elevation: elevationData,
+        trash: trashData
+      });
+    }
+  });
+  location(req.body.location, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      elevation(data.lat, data.lng, (data) => {
+        elevationData = data;
+        if (newsData && trashData) {
+          res.render('./layouts/main', {
+            news: newsData,
+            elevation: elevationData,
+            trash: trashData
+          });
+        }
+      });
+      getLitterData(data.lat, data.lng)
+        .then((data) => {
+          trashData = data;
+          if (newsData && elevationData) {
+            res.render('./layouts/main', {
+              news: newsData,
+              elevation: elevationData,
+              trash: trashData
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  });
 });
 
 

@@ -76,23 +76,7 @@ select {
   box-sizing: border-box;
   font-size: 15px;
 }
-.feedback{
-  display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100px;
-}
-/* Style for the dropdown arrow */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="%23666" d="M9.4 11.6l6.1 6.1 6.1-6.1 1.8 1.8-7.9 7.9-7.9-7.9 1.8-1.8z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: 15px;
-}
+
   /* Styles for the submit button */
   input[type="submit"] {
     background-color: #6ada6e;
@@ -111,32 +95,66 @@ select {
   }
 
 /* FEEDBACK FORM */
+/* Modify input fields */
+input[type=text] {
+ 
+  display: inline-block;
+  padding: 5px 17px;
+  border: 1px solid rgb(158, 152, 152);
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  width: 40%;
+}
 input[type="email"],
 select {
   display: inline-block;
   padding: 5px 17px;
-  border: 1px solid rgb(215, 98, 98);
+  border: 1px solid rgb(158, 152, 152);
   border-radius: 10px;
   box-sizing: border-box;
   font-size: 15px;
+  width: 40%;
 }
-
 #feedback {
   display: inline-block;
   padding: 5px 17px;
-  border: 1px solid rgb(215, 98, 98);
+  border: 1px solid rgb(158, 152, 152);
   border-radius: 10px;
   box-sizing: border-box;
   font-size: 15px; 
+  max-width: 500px;
+  margin: 0 auto;
+}
+/* Modify textarea */
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  height: 150px; /* Set the desired height */
+}
+
+.center {
+  text-align: center;
+}
+
+.feedbackform {
+  background-color: #dce3ea;
+  text-align: center;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
  }
- .center {
+.feedbackform p{
   text-align: center;
 }
-.feedbackform{
-  background-color: #f8f9fa;
-  height: 80px;
-  text-align: center;
-}
+
 #get-litter-btn {
   background-color: rgb(218, 181, 136);
   color: #fff;
@@ -145,12 +163,12 @@ select {
   margin-top: 10px;
   align-items: left;
 }
-form {
+/* form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   align-items: center;
-}
+} */
 
 form label {
   text-align: right;
@@ -159,6 +177,32 @@ form label {
 form input {
   width: 100%;
   box-sizing: border-box;
+}
+.newscards {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  /* height: 120px; */
+  align-items: center;
+  justify-content: center; /* centers the cards horizontally */
+  margin-top: 2rem; /* adds some space above the cards */
+}
+
+.card {
+  flex: 1 1 calc(50% - 2rem);
+  margin: 2rem 1rem; /* reduces the vertical and horizontal margins */
+}
+
+@media screen and (min-width: 768px) { /* adjust this breakpoint according to your design needs */
+  .newscards {
+    width: 50%;
+    margin: 0 auto; /* centers the cards horizontally */
+  }
+
+  .card {
+    flex: 1 1 calc(50% - 2rem);
+    margin: 4rem 1rem; /* increases the vertical margin to create more space between the cards */
+  }
 }
 
 
