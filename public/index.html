@@ -85,10 +85,6 @@
           <button type="button" id="get-litter-btn">Get Litter Data</button>
         </form>
         <div id="litter-output"></div>
-        <!-- <div class="input-group news-input">
-          <input type="text" class="form-control" placeholder="Enter Location" />
-          <button class="btn btn-dark btn-lg" type="button">Submit</button>
-        </div> -->
       </div>
     </div>
   </section>
@@ -341,7 +337,7 @@
   <!-- MEET THE TEAM -->
   <section id="recycle" class="p-5 bg-light">
     <div class="container">
-      <h2 class="text-center text-primary">Meet the Team! </h2>
+      <h2 class="text-center text-primary">Meet the Team </h2>
 
       <div class="row g-4">
         <div class="col-md-6 col-lg-3">
@@ -412,14 +408,23 @@
     </div>
   </section>
   <!-- FEEDBACK ? -->
-  <div class="feedback">
-    <label for="select-box">Did you find this website helpful?</label>
-    <select>
-      <option value="apple">Yes</option>
-      <option value="banana">No</option>
-    </select>
+  <div class="feedbackform">
+    <p>We would love to receive your feedback on topics that you would like to stay infromed on! </p>
+    </div>
+
+  <div class="center">
+  <form method="POST" action="/main">
+    <label for="firstname">First name:</label><br>
+    <input type="text" id="firstname" name="firstname"><br>
+    <label for="lastname">Last name:</label><br>
+    <input type="text" id="lastname" name="lastname"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="feedback">Feedback:</label><br>
+    <textarea id="feedback" name="feedback"></textarea><br>
     <input type="submit" value="Submit">
-  </div>
+  </form>
+</div>
   <!-- FOOTER -->
   <footer class="p-5 bg-dark text-white text-center position-relative">
     <div class="footercontainer">

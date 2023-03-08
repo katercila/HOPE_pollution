@@ -110,4 +110,55 @@ select {
     background-color: #386c3b;
   }
 
-  
+/* FEEDBACK FORM */
+input[type="email"],
+select {
+  display: inline-block;
+  padding: 5px 17px;
+  border: 1px solid rgb(215, 98, 98);
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+#feedback {
+  display: inline-block;
+  padding: 5px 17px;
+  border: 1px solid rgb(215, 98, 98);
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 15px; 
+ }
+ .center {
+  text-align: center;
+}
+.feedbackform{
+  background-color: #f8f9fa;
+  height: 80px;
+  text-align: center;
+}
+#get-litter-btn {
+  background-color: rgb(218, 181, 136);
+  color: #fff;
+  font-size: 16px;
+  /* border-radius: 10px; */
+  margin-top: 10px;
+  align-items: left;
+}
+form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  align-items: center;
+}
+
+form label {
+  text-align: right;
+}
+
+form input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
