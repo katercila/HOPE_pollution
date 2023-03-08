@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # SAVE THE OCEAN 
 
 
@@ -70,4 +69,4 @@ Katerin Ercila, Ching Vang, Brandon Lopez, Antonio Askew
 
 ## License
 AWS Amplify
->>>>>>> Stashed changes
+
