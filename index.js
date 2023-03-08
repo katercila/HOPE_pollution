@@ -16,11 +16,15 @@ app.set('view engine', 'hbs');
  app.use(express.urlencoded({extended:false}));
 
 
- function call_article(finishedAPI, ticker='aapl'){
+ //This function calls the articles in the Climate News API
+function call_article(finishedAPI, ticker='aapl'){
   const options = {
     method: 'GET',
-    url: 'https://climate-news-feed.p.rapidapi.com/page/1',
-    qs: {limit: '5'},
+    url: 'https://climate-news-feed.p.rapidapi.com/',
+    qs: {
+      source: 'The Guardian',
+      limit: '2'
+    },
     headers: {
       'X-RapidAPI-Key': '13d1b5e584mshf26bb79cd8c3801p1aba3fjsn419eecd14937',
       'X-RapidAPI-Host': 'climate-news-feed.p.rapidapi.com',
@@ -32,64 +36,72 @@ app.set('view engine', 'hbs');
     if (error) throw new Error(error);
     if(response.statusCode === 200){finishedAPI(body)}
   });
-  // request('https://climate-news-feed.p.rapidapi.com/?rapidapi-key=13d1b5e584mshf26bb79cd8c3801p1aba3fjsn419eecd14937', {json:true},(err,res,body)=>{
-  //     if(err){return console.log(err);}
-  //     if(res.statusCode === 200){finishedAPI(body)}
-  // });
 }
 
-const API_KEY = '6bd03f1a-b930-11ed-bc36-0242ac130002-6bd03f92-b930-11ed-bc36-0242ac130002';
+//using a 3rd party api to pull cordinates
+function location(address = 'charlotte', callback) {
+  const url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(address) + '.json?access_token=pk.eyJ1IjoiY3ZhbmciLCJhIjoiY2xlMXAxYWd2MW15azNvbGdldGRkdmw3aiJ9.kI1WaYQ89vhzF-j9hOw5Xw'
+  request({ url: url, json: true }, (error, { body }) => {
+    if (error) {
+      callback('Unable to connect to location services!', undefined)
+    } else if (body.features.length === 0) {
+      callback('Unable to find location. Try another search.', undefined)
+    } else {
+      callback(undefined, {
+        lat: body.features[0].center[1],
+        lng: body.features[0].center[0]
+      })
+    }
+  })
+}
 
-const getElevationData = async (lat, lng) => {
+// Brandon's API key 1 'e881ff5c-b841-11ed-a654-0242ac130002-e882009c-b841-11ed-a654-0242ac130002';
+// Brandon's API key 2 = '6bd03f1a-b930-11ed-bc36-0242ac130002-6bd03f92-b930-11ed-bc36-0242ac130002';
+// Ching's API key for Elevation- 8bd4a394-bd88-11ed-a654-0242ac130002-8bd4a448-bd88-11ed-a654-0242ac130002
+function elevation(lat, lng, finishedAPI) {
   const url = `https://api.stormglass.io/v2/elevation/point?lat=${lat}&lng=${lng}`;
 
-  const response = await fetch(url, {
+  const options = {
+    method: 'GET',
+    url: url,
     headers: {
-      'Authorization': API_KEY
-    }
+      'Authorization': 'e881ff5c-b841-11ed-a654-0242ac130002-e882009c-b841-11ed-a654-0242ac130002',
+      useQueryString: true
+    },
+    json: true
+  }
+
+ request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    if (response.statusCode === 200) { finishedAPI(body) }
+  });
+}
+
+const apiUrl = 'https://services3.arcgis.com/pI4ewELlDKS2OpCN/arcgis/rest/services/SDG_14_1_1_Plastic_debris_density/FeatureServer/0/query';
+
+const getLitterData = async (latitude, longitude, radius=500) => {
+  const params = new URLSearchParams({
+    where: '1=1',
+    outFields: '*',
+    outSR: '4326',
+    f: 'json',
+    geometry: `${longitude},${latitude}`,
+    geometryType: 'esriGeometryPoint',
+    inSR: '4326',
+    spatialRel: 'esriSpatialRelIntersects',
+    distance: radius,
+    units: 'esriSRUnit_Meter'
   });
 
+  const response = await fetch(`${apiUrl}?${params.toString()}`);
   const data = await response.json();
 
-  return data;
-};
-
-const getLocationData = async (location) => {
-  const url = `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`;
-
-  const response = await fetch(url);
-  const data = await response.json();
-
-  return data[0];
-};
-
-const handleGetElevationClick = async () => {
-  const locationInput = document.getElementById('location-input');
-  const elevationOutput = document.getElementById('elevation-output');
-
-  const location = locationInput.value;
-
-  try {
-    // Use the OpenStreetMap Nominatim API to get the latitude and longitude of the location
-    const locationData = await getLocationData(location);
-    const latLng = {
-      lat: locationData.lat,
-      lng: locationData.lon
-    };
-
-    // Get the elevation data from the Stormglass API
-    const elevationData = await getElevationData(latLng.lat, latLng.lng);
-    console.log(elevationData)
-    console.log(typeof elevationData.data)
-    elevationOutput.textContent = `Elevation: ${elevationData.data.elevation}`;
-  } catch (error) {
-    elevationOutput.textContent = `Error: ${error.message}`;
+  if (!data || !data.features || data.features.length === 0) {
+    return null;
+  } else {
+    return data;
   }
 };
-
-// const getElevationBtn = document.getElementById('get-elevation-btn');
-// getElevationBtn.addEventListener('click', handleGetElevationClick);
-
 
 // Define a route handler for the root URL
 // This renders the "main.hbs" view using the Handlebars templating engine
@@ -101,21 +113,102 @@ app.get('/', function(req, res) {
   })
 });
 
+
+
 // this takes you to the home page
 app.get('/home', (req, res) => {
-  call_article(function(doneAPI){
-    res.render('home', {
-        news: doneAPI
-    })
-  })
+  let newsData, elevationData,trashData;
+
+  call_article(function(doneAPI) {
+    newsData = doneAPI;
+    if (elevationData) {
+      res.render('home', {
+        news: newsData,
+        elevation: elevationData,
+        trash: trashData
+      });
+    }
+  });
+
+  location(req.body.location, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      elevation(data.lat, data.lng, (data) => {
+        elevationData = data;
+        if (newsData) {
+          res.render('home', {
+            news: newsData,
+            elevation: elevationData,
+            trash:trashData
+          });
+        }
+      });
+    }
+  });
+  location(req.body.location, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      getLitterData(data.lat, data.lng, (data) => {
+        trashData = data;
+        if (newsData) {
+          res.render('home', {
+            news: newsData,
+            elevation: elevationData,
+            trash: trashData
+          });
+        }
+      });
+    }
+  });
 });
 
 app.post('/home', (req, res) => {
-  call_article(function(doneAPI){
-    res.render('home', {
-        news: doneAPI
-    })
-  })
+  let newsData, elevationData, trashData;
+
+  call_article(function (doneAPI) {
+    newsData = doneAPI;
+    if (elevationData && trashData) {
+      res.render('home', {
+        news: newsData,
+        elevation: elevationData,
+        trash: trashData
+      });
+    }
+  });
+
+  location(req.body.location, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      elevation(data.lat, data.lng, (data) => {
+        elevationData = data;
+        if (newsData && trashData) {
+          res.render('home', {
+            news: newsData,
+            elevation: elevationData,
+            trash: trashData
+          });
+        }
+      });
+      
+      getLitterData(data.lat, data.lng)
+        .then((data) => {
+          trashData = data;
+          if (newsData && elevationData) {
+            res.render('home', {
+              news: newsData,
+              elevation: elevationData,
+              trash: trashData
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  });
 });
 
 
@@ -166,6 +259,4 @@ app.listen(8000, () => {
 // const getLitterBtn = document.getElementById('get-litter-btn');
 // getLitterBtn.addEventListener('click', handleGetLitterClick);
 
-//ocean elavation api
 
-// const API_KEY = 'e881ff5c-b841-11ed-a654-0242ac130002-e882009c-b841-11ed-a654-0242ac130002';
