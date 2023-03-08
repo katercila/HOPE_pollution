@@ -307,12 +307,10 @@
         </div>
       </div>
     </section> 
-<!-- ANTONIO'S FEEDBACK FORM -->
-
         <!-- MEET THE TEAM -->
     <section id="recycle" class="p-5 bg-light">
       <div class="container">
-        <h2 class="text-center text-primary">Meet the Team! </h2>
+        <h2 class="text-center text-primary">Meet the Team </h2>
 
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
@@ -382,15 +380,23 @@
         </div>
       </div>
     </section>
-    <!-- FEEDBACK ? -->
-    <div class="feedback">
-    <label for="select-box">Did you find this website helpful?</label>
-    <select>
-      <option value="apple">Yes</option>
-      <option value="banana">No</option>
-    </select>
+ <!-- FEEDBACK ? -->
+ <div class="feedbackform">
+ <p>we would love to</p>
+ </div>
+  <div class="center">
+  <form method="POST" action="/main">
+    <label for="firstname">First name:</label><br>
+    <input type="text" id="firstname" name="firstname"><br>
+    <label for="lastname">Last name:</label><br>
+    <input type="text" id="lastname" name="lastname"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="feedback">Feedback:</label><br>
+    <textarea id="feedback" name="feedback"></textarea><br>
     <input type="submit" value="Submit">
-  </div>
+  </form>
+</div>
     <!-- FOOTER -->
     <footer class="p-5 bg-dark text-white text-center position-relative">
       <div class="footercontainer">

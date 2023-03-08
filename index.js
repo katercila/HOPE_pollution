@@ -1,16 +1,15 @@
-//needed npm express, path, hbs 
-
 const express = require("express");
 const path = require('path');
 const hbs = require('hbs');
 const request = require('request');
-const bodyParser = ('body-parser')
-
+const mysql = require('mysql2');
+const pool = require('./database.js');
 const app = express();
 
 // Set the views directory and view engine for the app
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 
 //sets middleware for body parser
  app.use(express.urlencoded({extended:false}));
@@ -211,9 +210,44 @@ app.post('/home', (req, res) => {
   });
 });
 
-
-// Serve static files from the "public" directory
+//index.html
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Parse JSON and URL-encoded request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: false}));
+
+app.get('/', (req, res) => {
+  res.render('main');
+});
+app.get('/home', (req, res) => {
+  res.render('home');
+});
+
+// Define a route handler for the form submission endpoint that inserts data into the MySQL database
+app.post('/main', async (req, res) => {
+  const { firstname, lastname, email, feedback } = req.body;
+  console.log(`New feedback form submission: ${firstname}, ${lastname}, ${email}, ${feedback}`);
+
+  try {
+    // Execute an INSERT query with the form data
+    const [rows, fields] = await pool.execute(
+      'INSERT INTO feedback (first_name, last_name, email, feedback) VALUES (?, ?, ?, ?)',
+      [firstname, lastname, email, feedback]
+    );
+    console.log(`Inserted ${rows.affectedRows} row(s)`);
+    // Release the MySQL connection
+    // pool.releaseConnection(connect);  //ends 
+    // connect.release();
+    res.send('Thanks for your feedback!');
+  
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Start the server
 app.listen(8000, () => {
-  console.log('Server listening on port 8000');
+  console.log('Listening on port 8000');
 });
